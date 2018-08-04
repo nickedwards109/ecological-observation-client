@@ -5,42 +5,66 @@ var mapCenter = { lat: 'lat', lng: 'lng'};
 
 function initMap() {
   $.ajax({url: url, success: function(response) {
-    // When the AJAX call to the server has responded...
-    // Put a map in the UI.
-    const map = new google.maps.Map(document.getElementById('map'), {
-      center: mapCenter,
-      zoom: 15
-    });
+    // We are in a callback function executed in response to the request to the
+    // Google Maps JS API. There is a google.maps object available in the scope
+    // of this callback, and we need to explicitly pass it into the scope of a
+    // few other functions. This is facilitated by defining it as a variable
+    // called mapsApiInstance.
+    var mapsApiInstance = google.maps;
 
-    // Iterate through the data in the response body.
-    // For each datapoint, display a marker on the map
-    // When the mouse hovers over the marker, the species common name should
-    //   be displayed
+    // Put a map in the UI.
+    var mapInUI = generateMap(mapsApiInstance, mapCenter);
+
+    // For each observation in the response from the server, display a marker
+    // that will open an informational window when clicked.
     response.forEach(function(observation) {
 
-      var latLng = {
-        lat: parseFloat(observation.latitude),
-        lng: parseFloat(observation.longitude)
-      };
+      var marker = generateMarker(mapsApiInstance, mapInUI, observation);
 
-      var contentString = '<div>Common Name: ' + observation.species_common_name + '</div>'
-        + '<div>Scientific Name: ' + observation.species_scientific_name + '</div>'
-        + '<div>Latitude: ' + observation.latitude + '</div>'
-        + '<div>Longitude: ' + observation.longitude + '</div>';
+      var informationWindowContent = generateInformationWindowContent(observation);
 
-      var infoWindow = new google.maps.InfoWindow({
-        content: contentString
-      });
+      var infoWindow = generateInformationWindow(mapsApiInstance, informationWindowContent);
 
-      var marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        title: observation.species_common_name
-      });
-
-      marker.addListener('click', function() {
-        infoWindow.open(map, marker);
-      });
+      addClickListenerOnMarker(mapInUI, marker, infoWindow);
     });
   }});
+}
+
+function generateMap(mapsApiInstance, mapCenter) {
+  return new mapsApiInstance.Map(document.getElementById('map'), {
+    center: mapCenter,
+    zoom: 15
+  });
+}
+
+function generateMarker(mapsApiInstance, mapInUI, observation) {
+  var latLng = {
+    lat: parseFloat(observation.latitude),
+    lng: parseFloat(observation.longitude)
+  };
+
+  return new mapsApiInstance.Marker({
+    position: latLng,
+    map: mapInUI,
+    title: observation.species_common_name
+  });
+}
+
+function generateInformationWindowContent(observation) {
+  return '<div>Common Name: ' + observation.species_common_name + '</div>'
+    + '<div>Scientific Name: ' + observation.species_scientific_name + '</div>'
+    + '<div>Latitude: ' + observation.latitude + '</div>'
+    + '<div>Longitude: ' + observation.longitude + '</div>';
+}
+
+function generateInformationWindow(mapsApiInstance, informationWindowContent) {
+  return new mapsApiInstance.InfoWindow({
+    content: informationWindowContent
+  });
+}
+
+function addClickListenerOnMarker(mapInUI, marker, infoWindow) {
+  marker.addListener('click', function() {
+    infoWindow.open(mapInUI, marker);
+  });
 }
