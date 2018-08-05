@@ -1,7 +1,7 @@
 // The production URL and map center are not included here to keep them
 // out of version control and out of public view. -->
-var url = 'URL';
-var mapCenter = { lat: 'lat', lng: 'lng'};
+var url = <URL string>;
+var mapCenter = { lat: <latitude number>, lng: <longitude number>};
 
 function initMap() {
   $.ajax({url: url, success: function(response) {
