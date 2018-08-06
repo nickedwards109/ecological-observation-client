@@ -4,6 +4,7 @@ The intended purpose is as a tool for ecologists and naturalists who wish to vis
 
 To get the application up and running, you will need to do the following:
   - Set up a remote server with an API endpoint that responds with JSON in the following format:
+  `
     [
       {
         id: <integer>,
@@ -23,6 +24,7 @@ To get the application up and running, you will need to do the following:
       },
       ...
     ]
+ `
   - In the file js/map.js, replace <URL string> with a string representing the API endpoint
   - In the file js/map.js, replace <latitude number> and <longitude number> with numbers representing the coordinates of the desired center of the map display
   - In the file index.html, replace <API_KEY> with a valid Google Maps JavaScript API key
