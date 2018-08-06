@@ -25,9 +25,9 @@ To get the application up and running, you will need to do the following:
       ...
     ]
  `
-  - In the file js/map.js, replace <URL string> with a string representing the API endpoint
-  - In the file js/map.js, replace <latitude number> and <longitude number> with numbers representing the coordinates of the desired center of the map display
-  - In the file index.html, replace <API_KEY> with a valid Google Maps JavaScript API key
+  - In the file js/map.js, replace `<URL string>` with a string representing the API endpoint
+  - In the file js/map.js, replace `<latitude number>` and `<longitude number>` with numbers representing the coordinates of the desired center of the map display
+  - In the file index.html, replace `<API_KEY>` with a valid Google Maps JavaScript API key
   - Open up index.html in your browser, or host the application in production with index.html as the index document
 
 An example of source code for a server is at: https://github.com/nickedwards109/ecological-observation-server
