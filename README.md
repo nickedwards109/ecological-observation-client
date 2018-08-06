@@ -32,4 +32,4 @@ To get the application up and running, you will need to do the following:
 
 An example of source code for a server is at: https://github.com/nickedwards109/ecological-observation-server
 
-For an example of this application in production, as well as an example of a corresponding API endpoint in production, you can contact Nick Edwards at nickedwards109@gmail.com. He might even respond.
+For an example of this application in production, as well as an example of a corresponding API endpoint in production, you can contact Nick Edwards at nickedwards109@gmail.com.
